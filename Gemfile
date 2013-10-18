@@ -20,6 +20,11 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+group :development do
+  # 用来标注Model类在对应数据库表中的字段名及字段类型的gem
+  gem 'annotate'
+end
+
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
