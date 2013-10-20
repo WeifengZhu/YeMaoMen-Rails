@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  username: MyString
+  password_digest: MyString
+  bio: MyString
+  location: MyString
+  avatar_url: MyString
+  allow_browse: false
+  score: 1
+  last_active_time: 
+
+two:
+  username: MyString
+  password_digest: MyString
+  bio: MyString
+  location: MyString
+  avatar_url: MyString
+  allow_browse: false
+  score: 1
+  last_active_time: 
