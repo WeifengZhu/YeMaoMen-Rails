@@ -17,7 +17,7 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :allow_browse, :avatar_url, :bio, :last_active_time, :location, :password_digest, :score, :username
+  attr_accessible :allow_browse, :avatar_url, :bio, :location, :password, :password_confirmation, :score, :username
 
   # 写了这个就表明：表单提交的参数中要有password和password_confirmation，并且两者要一致。
   # 到时候user对象中存的是根据password和password_confirmation计算出来的password_digest。
