@@ -13,6 +13,7 @@
 #  last_active_time :datetime
 #  created_at       :datetime        not null
 #  updated_at       :datetime        not null
+#  identify_token   :string(255)
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html

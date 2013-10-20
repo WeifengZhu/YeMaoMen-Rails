@@ -13,6 +13,7 @@
 #  last_active_time :datetime
 #  created_at       :datetime        not null
 #  updated_at       :datetime        not null
+#  identify_token   :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -21,7 +22,7 @@ class User < ActiveRecord::Base
   # call create_remember_token before save
   before_save :create_identify_token
 
-  pirvate:
+  pirvate
 
     # 目前的处理逻辑是用户被保存进数据库之前产生一个identify_token并保存进数据库，用户登陆并不会刷新这个token，所以不能保证用户只能登陆
     # 一台设备，后续如果有需要可以加上这个限制。
