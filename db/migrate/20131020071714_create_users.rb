@@ -8,7 +8,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :avatar_url
       t.boolean :allow_browse
       t.integer :score
-      t.datatime :last_active_time
+      t.datetime :last_active_time
 
       t.timestamps
     end
