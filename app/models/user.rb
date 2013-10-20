@@ -19,10 +19,14 @@
 class User < ActiveRecord::Base
   attr_accessible :allow_browse, :avatar_url, :bio, :last_active_time, :location, :password_digest, :score, :username
 
+  # 写了这个就表明：表单提交的参数中要有password和password_confirmation，并且两者要一致。
+  # 到时候user对象中存的是根据password和password_confirmation计算出来的password_digest。
+  has_secure_password
+
   # call create_remember_token before save
   before_save :create_identify_token
 
-  pirvate
+  private
 
     # 目前的处理逻辑是用户被保存进数据库之前产生一个identify_token并保存进数据库，用户登陆并不会刷新这个token，所以不能保证用户只能登陆
     # 一台设备，后续如果有需要可以加上这个限制。
