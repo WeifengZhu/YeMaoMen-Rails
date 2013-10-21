@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131020073156) do
+ActiveRecord::Schema.define(:version => 20131021042746) do
 
   create_table "users", :force => true do |t|
     t.string   "username"
@@ -28,5 +28,6 @@ ActiveRecord::Schema.define(:version => 20131020073156) do
   end
 
   add_index "users", ["identify_token"], :name => "index_users_on_identify_token"
+  add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
 end

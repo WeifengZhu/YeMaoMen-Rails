@@ -26,6 +26,10 @@ class User < ActiveRecord::Base
   # call create_remember_token before save
   before_save :create_identify_token
 
+  validates :username, presence: true, length: { maximum: 50 }, uniqueness: { case_sensitive: false }
+  validates :password, presence: true
+  validates :password_confirmation, presence: true
+
   private
 
     # 目前的处理逻辑是用户被保存进数据库之前产生一个identify_token并保存进数据库，用户登陆并不会刷新这个token，所以不能保证用户只能登陆
