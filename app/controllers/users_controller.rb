@@ -8,10 +8,11 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       # app/views/users/create.rabl
-      render "users/create"
+      render 'users/create'
     else
       # 直接返回，不通过模板，并且加上对应的status code。
-      render json: {'failure_reason' => @user.errors.full_messages.first }.to_json, status: 400
+      # render json: {'failure_reason' => @user.errors.full_messages.first }.to_json, status: 400
+      render json: @user.errors.full_messages.first.to_json, status: 400
     end
   end
 end
