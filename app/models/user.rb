@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   before_save :create_identify_token
 
   validates :username, presence: true, length: { maximum: 50 }, uniqueness: { case_sensitive: false }
-  validates :password, presence: true
+  validates :password, presence: true, length: { :in => 6..20 }
   validates :password_confirmation, presence: true
 
   private

@@ -1,0 +1,24 @@
+zh:
+  activerecord:
+    models:
+      user: 用户
+    attributes:
+      user:
+        username: "用户名"
+        password: "密码"
+        password_confirmation: "确认密码"
+        bio: "个性签名"
+        location: "地区"
+        avatar_url: "头像地址"
+        allow_browse: "是否允许被浏览猫聊"
+        score: "分数"
+        last_active_time: "上次活跃时间"
+        identify_token: "识别码"
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              confirmation: "和确认密码不一致。"
+            username:
+              taken: "已被占用。"  
