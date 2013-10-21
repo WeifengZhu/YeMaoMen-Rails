@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   # 响应xxxx.json的请求
   respond_to :json
 
-  # POST /users
+  # POST users
   def create
     # 这里这么写的好处是：只要客户端把对应的参数放在一个user的key下，后台这里就不需要再枚举一边key值了。
     @user = User.new(params[:user])
