@@ -28,8 +28,8 @@ class User < ActiveRecord::Base
   before_save :create_identify_token
 
   validates :username, presence: true, length: { maximum: 50 }, uniqueness: { case_sensitive: false }
-  validates :password, presence: true, length: { :in => 6..20 }
-  validates :password_confirmation, presence: true
+  validates :password, length: { :in => 6..20 }, if: :validate_password?
+  validates :password_confirmation, presence: true, if: :validate_password?
 
   private
 
@@ -39,5 +39,9 @@ class User < ActiveRecord::Base
       # without self the assignment would create a local variable called identify_token, 
       # which isn’t what we want at all.
       self.identify_token = SecureRandom.urlsafe_base64
+    end
+
+    def validate_password?
+      password.present? || password_confirmation.present?
     end
 end
