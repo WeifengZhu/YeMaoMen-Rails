@@ -1,8 +1,11 @@
 # encoding: utf-8
 
 class SessionsController < ApplicationController
+  skip_before_filter :authorize
+
   # POST sessions
   def create
+    # logger.debug "&&&&& the request header #{request.env.inspect}"
     @user = User.find_by_username(params[:username])
 
     if @user.nil?

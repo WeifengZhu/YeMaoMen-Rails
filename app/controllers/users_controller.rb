@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  skip_before_filter :authorize, only: [:create]
+
   # 响应xxxx.json的请求
   respond_to :json
 
@@ -22,6 +24,11 @@ class UsersController < ApplicationController
 
   # POST users/info
   def update
-    
+    # @user已经被authorize这个before_filter方法找到了
+    if @user.update_attributes(params[:user])
+      render 'users/user'
+    else
+      render json: @user.errors.full_messages.to_json, status: 400
+    end
   end
 end

@@ -31,7 +31,7 @@ module Yemaomen
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    config.i18n.default_locale = :zh
+    # config.i18n.default_locale = :zh
     #
     # 如果你在config下建立了目录来管理*.yml文件，需要制定load_path，默认不会递归加载目录。
     # 详见：http://guides.rubyonrails.org/v3.2.13/i18n.html 之 3.5
