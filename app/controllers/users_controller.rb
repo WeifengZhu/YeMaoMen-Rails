@@ -19,4 +19,9 @@ class UsersController < ApplicationController
       render json: @user.errors.full_messages.to_json, status: 400
     end
   end
+
+  # POST users/info
+  def update
+    
+  end
 end

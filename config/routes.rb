@@ -1,6 +1,8 @@
 Yemaomen::Application.routes.draw do
 
-  resources :users, only: [:create]
+  resources :users, only: [:create, :update]
+  match '/users/info', to: 'users#update', via: :post
+
   resources :sessions, only: [:create]
 
   # The priority is based upon order of creation:
