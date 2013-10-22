@@ -1,4 +1,7 @@
+# encoding: utf-8
+
 class UsersController < ApplicationController
+
   skip_before_filter :authorize, only: [:create]
 
   # 响应xxxx.json的请求
@@ -31,4 +34,19 @@ class UsersController < ApplicationController
       render json: @user.errors.full_messages.to_json, status: 400
     end
   end
+
+  # DELETE users
+  def destroy
+    # @user已经被authorize这个before_filter方法找到了
+    #
+    # 如果这个用户由于某种原因（例：其下有未读私信）不能被删除的话。可以用过一个callback(before_destroy)来判断用户是否能被删除,
+    # 如果before_destroy这个callback返回false的话，那么@user.destroy也返回false，然后就可以把为什么不能删除用户的原因返回
+    # 给API了。
+    if @user.destroy
+      render json: '夜猫账户删除成功。'.to_json, status: 200
+    else
+      render json: '由于XXX，夜猫账户删除未能成功。'.to_json, status: 400
+    end
+  end
+
 end
