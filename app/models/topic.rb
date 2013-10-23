@@ -10,5 +10,9 @@
 #
 
 class Topic < ActiveRecord::Base
+  
   attr_accessible :description, :title
+  
+  has_many :posts, dependent: :destroy 
+  
 end

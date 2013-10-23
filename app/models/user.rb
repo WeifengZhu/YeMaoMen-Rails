@@ -17,8 +17,11 @@
 #
 
 class User < ActiveRecord::Base
+  
   attr_accessible :allow_browse, :avatar_url, :bio, :location, :password, :password_confirmation,
    :username, :last_active_time
+   
+  has_many :posts, dependent: :destroy 
 
   # 写了这个就表明：表单提交的参数中要有password和password_confirmation，并且两者要一致。
   # 到时候user对象中存的是根据password和password_confirmation计算出来的password_digest。
@@ -44,4 +47,5 @@ class User < ActiveRecord::Base
     def validate_password?
       password.present? || password_confirmation.present?
     end
+    
 end

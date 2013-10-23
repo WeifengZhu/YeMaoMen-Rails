@@ -5,6 +5,7 @@ Yemaomen::Application.routes.draw do
   match '/users', to: 'users#destroy', via: :delete
 
   resources :sessions, only: [:create]
+  resources :topics, only: [:index]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
