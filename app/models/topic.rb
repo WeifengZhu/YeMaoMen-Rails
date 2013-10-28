@@ -15,7 +15,7 @@ class Topic < ActiveRecord::Base
   
   # This association indicates that each instance of the model has zero or more instances of another model.
   # The name of the other model is pluralized when declaring a has_many association.
-  has_many :posts, dependent: :destroy 
+  has_many :posts, dependent: :destroy, order: "created_at DESC" 
   
   # 用于获取当天的话题。当天的话题数不固定，运营的时候每天创建了多少个话题，就会有多少个话题返回。
   def self.today
