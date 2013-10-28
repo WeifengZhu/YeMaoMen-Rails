@@ -18,7 +18,7 @@ class Post < ActiveRecord::Base
   
   # A belongs_to association sets up a one-to-one connection with another model, such that each instance of the declaring 
   # model “belongs to” one instance of the other model. 在posts表中要有topic_id这个字段。
-  belongs_to :topic, counter_cache: true
+  belongs_to :topic
   belongs_to :user
   
   # self join
