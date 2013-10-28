@@ -20,5 +20,9 @@ class Post < ActiveRecord::Base
   # model “belongs to” one instance of the other model. 在posts表中要有topic_id这个字段。
   belongs_to :topic
   belongs_to :user
+  
+  # self join
+  # 这么设置好之后，可以通过@post.reply_to_post来获取这个post所回复的post。
+  has_one :reply_to_post, class_name: "Post", foreign_key: "reply_to_post_id"
     
 end
