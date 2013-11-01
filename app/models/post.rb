@@ -33,6 +33,7 @@ class Post < ActiveRecord::Base
   has_many :re_posts, :class_name => "Post", foreign_key: "reply_to_post_id", dependent: :nullify
   belongs_to :reply_to_post, :class_name => "Post"
   
-  
+  # not re_posts. 不是回复别人的猫聊。
+  scope :original, where("reply_to_post_id IS NULL")
   
 end
