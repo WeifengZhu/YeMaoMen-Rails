@@ -32,5 +32,7 @@ class Post < ActiveRecord::Base
   # If you set the :dependent option to :nullify, then deleting this object will set the foreign key in the association object to NULL.
   has_many :re_posts, :class_name => "Post", foreign_key: "reply_to_post_id", dependent: :nullify
   belongs_to :reply_to_post, :class_name => "Post"
-    
+  
+  
+  
 end
