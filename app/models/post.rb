@@ -35,5 +35,5 @@ class Post < ActiveRecord::Base
   
   # not re_posts. 不是回复别人的猫聊。
   scope :original, where("reply_to_post_id IS NULL")
-  
+  scope :top_three, order("like_count DESC").limit(3)
 end

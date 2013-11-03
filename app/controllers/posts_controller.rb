@@ -7,17 +7,20 @@ class PostsController < ApplicationController
   
   # GET top_posts
   def top_posts
-    # 获取今天的Topic数组
+    # 获取今天的Topic ActiveRecord::Relation集合
     topics_of_today = Topic.today
     
-    # 根据Topic和Post的association获取posts
+    # 初始化@posts
+    @posts = Array.new
+    
+    # 根据Topic和Post的association获取top posts
+    # original和top_three都是定义在Post中的scope
     topics_of_today.each do |topic|
-      
+      top_posts_of_topic = topic.posts.original.top_three
+      @posts + top_posts_of_topic
     end
     
-    # 根据Post中定义的scope选出被赞数前三的post，并且不是回复别人的猫聊
-    
-    # 组成top_posts数组，RABL模板根据这个数组返回json数据。
+    render 'posts/top_posts'
   end
   
 end
