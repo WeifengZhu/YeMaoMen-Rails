@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     # 不适用于这个if...else...end结构，应该用异常处理的那个结构。
     if @user.save
       # app/views/users/user.rabl
-      render 'users/user'
+      render 'users/create_success'
     else
       # 直接返回json代码参考
       # render json: {'failure_reason' => @user.errors.full_messages.first }.to_json, status: 400
