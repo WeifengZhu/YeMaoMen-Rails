@@ -8,7 +8,10 @@ class PostsController < ApplicationController
   # GET top_posts
   def top_posts
     # 获取今天的Topic ActiveRecord::Relation集合
-    topics_of_today = Topic.today
+    
+    # TODO 为了测试用Topic.all，实际使用的时候应该用Topic.today。  
+    # topics_of_today = Topic.today
+    topics_of_today = Topic.all
     
     # 初始化@posts
     @posts = Array.new
