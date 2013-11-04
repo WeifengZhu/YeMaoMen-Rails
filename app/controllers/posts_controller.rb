@@ -20,11 +20,11 @@ class PostsController < ApplicationController
     # original和top_three都是定义在Post中的scope
     topics_of_today.each do |topic|
       top_posts_of_topic = topic.posts.original.top_three
-      Rails.logger.debug { "each top_posts_of_topic: #{top_posts_of_topic.inspect}" }
+      # Rails.logger.debug { "each top_posts_of_topic: #{top_posts_of_topic.inspect}" }
       @posts = @posts + top_posts_of_topic
     end
     
-    Rails.logger.debug { "the result @posts: #{@posts}" }
+    # Rails.logger.debug { "the result @posts: #{@posts}" }
     render 'posts/top_posts'
   end
   
