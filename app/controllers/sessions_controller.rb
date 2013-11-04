@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
 
     # 这里可以用authenticate()是因为在User model中加入了has_secure_password这个函数调用。
     if @user && @user.authenticate(params[:password])
-      render 'users/user'
+      render 'sessions/login_success'
     else
       render json: '密码不正确，请确认。'.to_json, status: 400
     end

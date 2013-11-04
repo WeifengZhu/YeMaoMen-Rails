@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   def update
     # @user已经被authorize这个before_filter方法找到了
     if @user.update_attributes(params[:user])
-      render 'users/user'
+      render 'users/update_success'
     else
       render json: @user.errors.full_messages.to_json, status: 400
     end
