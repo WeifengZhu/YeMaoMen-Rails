@@ -8,6 +8,8 @@ Yemaomen::Application.routes.draw do
   resources :topics, only: [:index]
   resources :posts, only: [:top_posts, :create, :destroy]
   match '/top_posts', to: 'posts#top_posts', via: :get
+  # :destroy_all可以不加入resources的only:列表中。
+  match '/posts', to: 'posts#destroy_all', via: :delete
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

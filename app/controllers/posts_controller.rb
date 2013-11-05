@@ -54,4 +54,13 @@ class PostsController < ApplicationController
     end
   end
   
+  # DELETE posts
+  # 删除当前用户下的所有猫聊。
+  def destroy_all
+    @user.posts.each do |post|
+      post.destroy
+    end
+    render json: '所有猫聊删除成功。'.to_json, status: 200
+  end
+  
 end
