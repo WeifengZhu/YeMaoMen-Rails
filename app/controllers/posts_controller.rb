@@ -7,6 +7,25 @@ class PostsController < ApplicationController
   # 响应xxxx.json的请求
   respond_to :json
   
+  # GET posts
+  def index
+    topic_id = params[:topic_id]
+    target_user_id = params[:target_user_id]
+    if topic_id.nil? && target_user_id == @user.id
+      # 我的猫聊列表
+      @posts = @user.posts
+    elsif !topic_id.nil? && target_user_id.nil?
+      # 话题空间的猫聊列表
+      @posts = Topic.find(topic_id).posts
+    elsif topic_id.nil? && target_user_id.nil?
+      # TODO 闲扯板块的猫聊，在Post里面定义一个scope来实现，或直接在这里通过where来实现。
+    elsif topic_id.nil? && !target_user_id.nil? && target_user_id != @user.id
+      # TODO 查看别人的猫聊历史，要判断是否allow_browse。
+    else
+      # !topic_id.nil? && !target_user_id.nil? 理论上，如果客户端请求正确的话，不会出现这种情况。
+    end
+  end
+  
   # GET top_posts
   def top_posts
     # 获取今天的Topic ActiveRecord::Relation集合

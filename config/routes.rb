@@ -6,9 +6,9 @@ Yemaomen::Application.routes.draw do
 
   resources :sessions, only: [:create]
   resources :topics, only: [:index]
-  resources :posts, only: [:top_posts, :create, :destroy]
+  resources :posts, only: [:top_posts, :create, :destroy, :index]
   match '/top_posts', to: 'posts#top_posts', via: :get
-  # :destroy_all可以不加入resources的only:列表中。
+  # :destroy_all可以不加入resources的only:列表中，当然，加进去也没什么问题。
   match '/posts', to: 'posts#destroy_all', via: :delete
 
   # The priority is based upon order of creation:
