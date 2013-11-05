@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class PostsController < ApplicationController
   
   skip_before_filter :authorize, only: [:top_posts]
@@ -26,6 +28,16 @@ class PostsController < ApplicationController
     
     # Rails.logger.debug { "the result @posts: #{@posts}" }
     render 'posts/top_posts'
+  end
+  
+  # POST posts
+  def create
+    @post = Post.new(params[:post])
+    if @post.save
+      render json: '猫聊发布成功。'.to_json, status: 200
+    else
+      render json: @post.errors.full_messages.to_json, status: 400
+    end
   end
   
 end
