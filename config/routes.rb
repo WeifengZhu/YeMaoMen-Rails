@@ -6,7 +6,7 @@ Yemaomen::Application.routes.draw do
 
   resources :sessions, only: [:create]
   resources :topics, only: [:index]
-  resources :posts, only: [:top_posts, :create]
+  resources :posts, only: [:top_posts, :create, :destroy]
   match '/top_posts', to: 'posts#top_posts', via: :get
 
   # The priority is based upon order of creation:

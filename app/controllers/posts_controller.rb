@@ -40,4 +40,18 @@ class PostsController < ApplicationController
     end
   end
   
+  # DELETE posts/:id
+  def destroy
+    @post = Post.find(params[:id])
+    
+    # 如果这个猫聊由于某种原因不能被删除的话。可以用过一个callback(before_destroy)来判断猫聊是否能被删除,
+    # 如果before_destroy这个callback返回false的话，那么@post.destroy也返回false，然后就可以把为什么不能删除用户的原因返回
+    # 给API了。
+    if @post.destroy
+      render json: '猫聊删除成功。'.to_json, status: 200
+    else
+      render json: '由于XXX，猫聊删除未能成功。'.to_json, status: 400
+    end
+  end
+  
 end
