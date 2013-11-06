@@ -20,6 +20,7 @@ class PostsController < ApplicationController
     elsif topic_id.nil? && !target_user_id.nil?
       # 查看别人的猫聊历史
       target_user = User.find(target_user_id)
+      # nil和false都是false，TODO: users表中的allow_browse字段应该有个默认值true或false。
       if target_user.allow_browse
         @posts = target_user.posts
       else
