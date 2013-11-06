@@ -32,6 +32,12 @@ class PostsController < ApplicationController
     render 'posts/index'
   end
   
+  # GET my_posts
+  def my_posts
+    @posts = @user.posts
+    render 'posts/index'
+  end
+  
   # GET top_posts
   def top_posts
     # 获取今天的Topic ActiveRecord::Relation集合
@@ -61,7 +67,7 @@ class PostsController < ApplicationController
     if @post.save
       render json: '猫聊发布成功。'.to_json, status: 200
     else
-      render json: @post.errors.full_messages.to_json, status: 400
+      render json: @post.errors.full_messages.to_json, status: 400 
     end
   end
   
