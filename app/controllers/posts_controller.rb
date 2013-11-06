@@ -18,9 +18,16 @@ class PostsController < ApplicationController
       # 话题空间的猫聊列表
       @posts = Topic.find(topic_id).posts
     elsif topic_id.nil? && target_user_id.nil?
-      # TODO 闲扯板块的猫聊，在Post里面定义一个scope来实现，或直接在这里通过where来实现。
+      # 闲扯板块的猫聊
+      @posts = Post.free_chat
     elsif topic_id.nil? && !target_user_id.nil? && target_user_id != @user.id
-      # TODO 查看别人的猫聊历史，要判断是否allow_browse。
+      # 查看别人的猫聊历史
+      target_user = User.find(target_user_id)
+      if target_user.allow_browse
+        @posts = target_user.posts
+      else
+        @posts = target_user.posts.limit(5)
+      end
     else
       # !topic_id.nil? && !target_user_id.nil? 理论上，如果客户端请求正确的话，不会出现这种情况。
     end
