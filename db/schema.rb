@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131106124844) do
+ActiveRecord::Schema.define(:version => 20131106125321) do
 
   create_table "posts", :force => true do |t|
     t.integer  "topic_id"
@@ -38,11 +38,11 @@ ActiveRecord::Schema.define(:version => 20131106124844) do
     t.string   "bio"
     t.string   "location"
     t.string   "avatar_url"
-    t.boolean  "allow_browse"
+    t.boolean  "allow_browse",     :default => true
     t.integer  "score",            :default => 0
     t.datetime "last_active_time"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.string   "identify_token"
   end
 
