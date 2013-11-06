@@ -53,7 +53,7 @@ class PostsController < ApplicationController
     end
     
     # Rails.logger.debug { "the result @posts: #{@posts}" }
-    render 'posts/top_posts'
+    render 'posts/index'
   end
   
   # POST posts
