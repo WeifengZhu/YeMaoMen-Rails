@@ -2,7 +2,7 @@
 
 class PostsController < ApplicationController
   
-  skip_before_filter :authorize, only: [:top_posts]
+  skip_before_filter :authorize, only: [:top_posts, :index]
   
   # 响应xxxx.json的请求
   respond_to :json
@@ -11,16 +11,13 @@ class PostsController < ApplicationController
   def index
     topic_id = params[:topic_id]
     target_user_id = params[:target_user_id]
-    if topic_id.nil? && target_user_id == @user.id
-      # 我的猫聊列表
-      @posts = @user.posts
-    elsif !topic_id.nil? && target_user_id.nil?
+    if !topic_id.nil? && target_user_id.nil?
       # 话题空间的猫聊列表
       @posts = Topic.find(topic_id).posts
     elsif topic_id.nil? && target_user_id.nil?
       # 闲扯板块的猫聊
       @posts = Post.free_chat
-    elsif topic_id.nil? && !target_user_id.nil? && target_user_id != @user.id
+    elsif topic_id.nil? && !target_user_id.nil?
       # 查看别人的猫聊历史
       target_user = User.find(target_user_id)
       if target_user.allow_browse
