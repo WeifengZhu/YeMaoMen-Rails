@@ -19,7 +19,7 @@
 class User < ActiveRecord::Base
   
   attr_accessible :allow_browse, :avatar_url, :bio, :location, :password, :password_confirmation,
-   :username, :last_active_time
+   :username, :last_active_time, :score
   
   # 按时间降序排列，即新创建的在前。 
   has_many :posts, dependent: :destroy, order: "created_at DESC" 
