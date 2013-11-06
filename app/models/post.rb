@@ -29,7 +29,8 @@ class Post < ActiveRecord::Base
   # If the associated object has already been retrieved from the database for this object, the cached version will be returned. 
   # To override this behavior (and force a database read), pass true as the force_reload argument(@post.reply_to_post(true)).
   #
-  # If you set the :dependent option to :nullify, then deleting this object will set the foreign key in the association object to NULL.
+  # If you set the :dependent option to :nullify, then deleting this object will set the foreign key in the association object 
+  # to NULL.
   has_many :re_posts, :class_name => "Post", foreign_key: "reply_to_post_id", dependent: :nullify
   belongs_to :reply_to_post, :class_name => "Post"
   

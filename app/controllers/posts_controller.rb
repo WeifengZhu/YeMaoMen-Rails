@@ -31,6 +31,7 @@ class PostsController < ApplicationController
     else
       # !topic_id.nil? && !target_user_id.nil? 理论上，如果客户端请求正确的话，不会出现这种情况。
     end
+    render 'posts/index'
   end
   
   # GET top_posts
