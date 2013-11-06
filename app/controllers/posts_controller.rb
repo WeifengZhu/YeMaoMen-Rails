@@ -76,7 +76,6 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
     @post.like_count += 1
-    # TODO score增加默认值为0
     # 暂时不对user能否save成功作判断。
     @post.user.score += 1
     @post.user.save
