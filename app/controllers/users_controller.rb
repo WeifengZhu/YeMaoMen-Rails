@@ -2,10 +2,16 @@
 
 class UsersController < ApplicationController
 
-  skip_before_filter :authorize, only: [:create]
+  skip_before_filter :authorize, only: [:create, :top_users]
 
   # 响应xxxx.json的请求
   respond_to :json
+  
+  # GET top_users
+  def top_users
+    @users = User.top_users
+    render 'users/top_users'
+  end
 
   # POST users
   def create

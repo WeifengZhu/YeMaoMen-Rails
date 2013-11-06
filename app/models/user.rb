@@ -34,6 +34,8 @@ class User < ActiveRecord::Base
   validates :username, presence: true, length: { maximum: 50 }, uniqueness: { case_sensitive: false }
   validates :password, length: { :in => 6..20 }, if: :validate_password?
   validates :password_confirmation, presence: true, if: :validate_password?
+  
+  scope :top_users, order("score DESC").limit(5)
 
   private
 

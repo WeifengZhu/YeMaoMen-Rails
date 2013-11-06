@@ -3,6 +3,7 @@ Yemaomen::Application.routes.draw do
   resources :users, only: [:create, :update, :destroy]
   match '/users/info', to: 'users#update', via: :post
   match '/users', to: 'users#destroy', via: :delete
+  match '/top_users', to: 'users#top_users', via: :get
 
   resources :sessions, only: [:create]
   resources :topics, only: [:index]
