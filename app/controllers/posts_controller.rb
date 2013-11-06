@@ -71,6 +71,18 @@ class PostsController < ApplicationController
     end
   end
   
+  # PUT posts/:id
+  # like猫聊。因为没有更新猫聊这个功能（只有删除猫聊的功能）所以update这个action刚好可以用来承载like猫聊的功能。
+  def update
+    @post = Post.find(params[:id])
+    @post.like_count += 1
+    if @post.save
+      render json: '成功赞'.to_json, status: 200
+    else
+      render json: @post.errors.full_messages.to_json, status: 400
+    end
+  end
+  
   # DELETE posts/:id
   def destroy
     @post = Post.find(params[:id])
