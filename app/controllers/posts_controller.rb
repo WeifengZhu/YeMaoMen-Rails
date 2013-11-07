@@ -4,9 +4,6 @@ class PostsController < ApplicationController
   
   skip_before_filter :authorize, only: [:top_posts, :index]
   
-  # 响应xxxx.json的请求
-  respond_to :json
-  
   # GET posts
   def index
     topic_id = params[:topic_id]
