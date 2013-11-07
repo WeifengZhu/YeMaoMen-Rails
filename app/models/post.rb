@@ -42,4 +42,23 @@ class Post < ActiveRecord::Base
   scope :top_three, order("like_count DESC").limit(3)
   # 闲扯板块的猫聊
   scope :free_chat, where("topic_id IS NULL") 
+  
+  # 和scope作用类似，但参数更明了。
+  def self.limited_posts(hash)
+    before_timestamp = hash[:before_timestamp]
+    after_timestamp = hash[:after_timestamp]
+    page_size = hash[:page_size]
+    
+    number_of_posts = (page_size && page_size.to_i > 0) ? page_size : 20
+    
+    if before_timestamp.nil? && after_timestamp.nil?
+      order("updated_at DESC").limit(page_size)
+    elsif before_timestamp.nil? && !after_timestamp.nil?
+      order("updated_at DESC").where("updated_at > ?", after_timestamp).limit(page_size)
+    else
+      # 如果API调用错误，同时传了before_timestamp和after_timestamp的话，会进入这个分支。
+      # 所以，请注意API的使用。
+      order("updated_at DESC").where("updated_at < ?", before_timestamp).limit(page_size)
+    end
+  end
 end

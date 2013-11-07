@@ -8,9 +8,13 @@ class PostsController < ApplicationController
   def index
     topic_id = params[:topic_id]
     target_user_id = params[:target_user_id]
+    before_timestamp = params[:before_timestamp]
+    after_timestamp = params[:after_timestamp]
+    page_size = params[:page_size]
+    hash = { before_timestamp: before_timestamp, after_timestamp: after_timestamp, page_size: page_size }
     if !topic_id.nil? && target_user_id.nil?
       # 话题空间的猫聊列表
-      @posts = Topic.find(topic_id).posts
+      @posts = Topic.find(topic_id).posts.limited_posts(hash)
     elsif topic_id.nil? && target_user_id.nil?
       # 闲扯板块的猫聊
       @posts = Post.free_chat
