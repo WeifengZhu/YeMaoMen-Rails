@@ -46,19 +46,31 @@ class Post < ActiveRecord::Base
   # 和scope作用类似，但参数更明了。
   def self.limited_posts(hash)
     before_timestamp = hash[:before_timestamp]
-    after_timestamp = hash[:after_timestamp]
-    page_size = hash[:page_size]
+    before_timestamp_utc = Time.zone.parse(before_timestamp).utc if before_timestamp
     
+    Rails.logger.debug { "before_timestamp: #{before_timestamp}" }
+    Rails.logger.debug { "before_timestamp_utc: #{before_timestamp_utc}" }
+    
+    after_timestamp = hash[:after_timestamp]
+    after_timestamp_utc = Time.zone.parse(after_timestamp).utc if after_timestamp
+    
+    Rails.logger.debug { "after_timestamp: #{after_timestamp}" }
+    Rails.logger.debug { "after_timestamp_utc: #{after_timestamp_utc}" }
+
+    page_size = hash[:page_size]
     number_of_posts = (page_size && page_size.to_i > 0) ? page_size : 20
     
-    if before_timestamp.nil? && after_timestamp.nil?
+    if before_timestamp_utc.nil? && after_timestamp_utc.nil?
+      Rails.logger.debug { "1" }
       order("updated_at DESC").limit(number_of_posts)
-    elsif before_timestamp.nil? && !after_timestamp.nil?
-      order("updated_at DESC").where("updated_at > ?", after_timestamp).limit(number_of_posts)
+    elsif before_timestamp_utc.nil? && !after_timestamp_utc.nil?
+      Rails.logger.debug { "2" }
+      order("updated_at DESC").where("updated_at > ?", after_timestamp_utc).limit(number_of_posts)
     else
+      Rails.logger.debug { "3" }
       # 如果API调用错误，同时传了before_timestamp和after_timestamp的话，会进入这个分支。
       # 所以，请注意API的使用。
-      order("updated_at DESC").where("updated_at < ?", before_timestamp).limit(number_of_posts)
+      order("updated_at DESC").where("updated_at < ?", before_timestamp_utc).limit(number_of_posts)
     end
   end
 end
