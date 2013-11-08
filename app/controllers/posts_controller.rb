@@ -11,21 +11,23 @@ class PostsController < ApplicationController
     before_timestamp = params[:before_timestamp]
     after_timestamp = params[:after_timestamp]
     page_size = params[:page_size]
+    
     hash = { before_timestamp: before_timestamp, after_timestamp: after_timestamp, page_size: page_size }
+    
     if !topic_id.nil? && target_user_id.nil?
       # 话题空间的猫聊列表
       @posts = Topic.find(topic_id).posts.limited_posts(hash)
     elsif topic_id.nil? && target_user_id.nil?
       # 闲扯板块的猫聊
-      @posts = Post.free_chat
+      @posts = Post.free_chat.limited_posts(hash)
     elsif topic_id.nil? && !target_user_id.nil?
       # 查看别人的猫聊历史
       target_user = User.find(target_user_id)
       # nil和false都是false
       if target_user.allow_browse
-        @posts = target_user.posts
+        @posts = target_user.posts.limited_posts(hash)
       else
-        @posts = target_user.posts.limit(5)
+        @posts = target_user.posts.order("updated_at DESC").limit(5)
       end
     else
       # !topic_id.nil? && !target_user_id.nil? 理论上，如果客户端请求正确的话，不会出现这种情况。
