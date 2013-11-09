@@ -65,7 +65,8 @@ class PostsController < ApplicationController
   
   # GET my_posts
   def my_posts
-    @posts = @user.posts
+    hash = { before_timestamp: before_timestamp, after_timestamp: after_timestamp, page_size: page_size }
+    @posts = @user.posts.limited_posts(hash)
     render 'posts/index'
   end
   
