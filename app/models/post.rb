@@ -60,19 +60,33 @@ class Post < ActiveRecord::Base
     Rails.logger.debug { "after_timestamp_utc: #{after_timestamp_utc}" }
 
     page_size = hash[:page_size]
-    number_of_posts = (page_size && page_size.to_i > 0) ? page_size : 20
+    number_of_posts_per_page = (page_size && page_size.to_i > 0) ? page_size : 20
     
     if before_timestamp_utc.nil? && after_timestamp_utc.nil?
       Rails.logger.debug { "1" }
-      order("updated_at DESC").limit(number_of_posts)
+      order("updated_at DESC").limit(number_of_posts_per_page)
     elsif before_timestamp_utc.nil? && !after_timestamp_utc.nil?
       Rails.logger.debug { "2" }
-      order("updated_at DESC").where("updated_at > ?", after_timestamp_utc).limit(number_of_posts)
+      order("updated_at DESC").where("updated_at > ?", after_timestamp_utc).limit(number_of_posts_per_page)
     else
       Rails.logger.debug { "3" }
       # 如果API调用错误，同时传了before_timestamp和after_timestamp的话，会进入这个分支。
       # 所以，请注意API的使用。
-      order("updated_at DESC").where("updated_at < ?", before_timestamp_utc).limit(number_of_posts)
+      order("updated_at DESC").where("updated_at < ?", before_timestamp_utc).limit(number_of_posts_per_page)
     end
   end
+  
+  def self.limited_posts_by_like_count(hash)
+    Rails.logger.debug { "#{hash.inspect}" }
+    
+    page = hash[:page]
+    # page = 2, offset = (2 - 1) * 20 = 20, 返回21 - 40的20条数据。
+    number_of_page = (page && (page.to_i >= 1)) ? page - 1 : 0
+    page_size = hash[:page_size]
+    number_of_posts_per_page = (page_size && page_size.to_i > 0) ? page_size : 20
+    offset = number_of_page * number_of_posts_per_page
+    
+    order("like_count DESC").limit(number_of_posts_per_page).offset(offset)
+  end
+  
 end

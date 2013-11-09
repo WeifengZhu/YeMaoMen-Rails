@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 class ApplicationController < ActionController::Base
+  
   # 白名单，所有controller的方法默认都需要被filter，其他controller里面如果不需要被filter的话，加上：
   # skip_before_filter :authorize, only: [:create, :update, :destroy] # create, update和destroy三个不需要被filter。
   before_filter :authorize
@@ -39,4 +40,9 @@ class ApplicationController < ActionController::Base
     def page_size
       params[:page_size]
     end
+    
+    def page
+      params[:page]
+    end
+    
 end

@@ -36,7 +36,31 @@ class PostsController < ApplicationController
   
   # GET posts_by_like_count
   def posts_by_like_count
-    
+    # page()定义在application_controller里面。
+    hash = { page: page, page_size: page_size }
+
+    if !topic_id.nil? && target_user_id.nil?
+      # 话题空间的猫聊列表
+      Rails.logger.debug { "话题空间" }
+      @posts = Topic.find(topic_id).posts.limited_posts_by_like_count(hash)
+    elsif topic_id.nil? && target_user_id.nil?
+      # 闲扯板块的猫聊
+      Rails.logger.debug { "闲扯" }
+      @posts = Post.free_chat.limited_posts_by_like_count(hash)
+    elsif topic_id.nil? && !target_user_id.nil?
+      # 查看别人的猫聊历史
+      Rails.logger.debug { "别的用户" }
+      target_user = User.find(target_user_id)
+      # nil和false都是false
+      if target_user.allow_browse
+        @posts = target_user.posts.limited_posts_by_like_count(hash)
+      else
+        @posts = target_user.posts.order("like_count DESC").limit(5)
+      end
+    else
+      # !topic_id.nil? && !target_user_id.nil? 理论上，如果客户端请求正确的话，不会出现这种情况。
+    end
+    render 'posts/index'
   end
   
   # GET my_posts
