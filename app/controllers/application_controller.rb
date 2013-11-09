@@ -19,4 +19,24 @@ class ApplicationController < ActionController::Base
         render json: '未登录，请先登录。'.to_json, status: 401
       end
     end
+    
+    def topic_id
+      params[:topic_id]
+    end
+    
+    def target_user_id
+      params[:target_user_id]
+    end
+    
+    def before_timestamp
+      params[:before_timestamp]
+    end
+    
+    def after_timestamp
+      params[:after_timestamp]
+    end
+    
+    def page_size
+      params[:page_size]
+    end
 end
