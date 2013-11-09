@@ -62,15 +62,27 @@ class Post < ActiveRecord::Base
     
     if before_timestamp_utc.nil? && after_timestamp_utc.nil?
       Rails.logger.debug { "1" }
-      order("updated_at DESC").limit(number_of_posts)
+      if hash[:order_by_like_count]
+        order("like_count DESC").limit(number_of_posts)
+      else
+        order("updated_at DESC").limit(number_of_posts)
+      end
     elsif before_timestamp_utc.nil? && !after_timestamp_utc.nil?
       Rails.logger.debug { "2" }
-      order("updated_at DESC").where("updated_at > ?", after_timestamp_utc).limit(number_of_posts)
+      if hash[:order_by_like_count]
+        order("like_count DESC").where("updated_at > ?", after_timestamp_utc).limit(number_of_posts)
+      else
+        order("updated_at DESC").where("updated_at > ?", after_timestamp_utc).limit(number_of_posts)
+      end
     else
       Rails.logger.debug { "3" }
       # 如果API调用错误，同时传了before_timestamp和after_timestamp的话，会进入这个分支。
       # 所以，请注意API的使用。
-      order("updated_at DESC").where("updated_at < ?", before_timestamp_utc).limit(number_of_posts)
+      if hash[:order_by_like_count]
+        order("like_count DESC").where("updated_at < ?", before_timestamp_utc).limit(number_of_posts)
+      else
+        order("updated_at DESC").where("updated_at < ?", before_timestamp_utc).limit(number_of_posts)
+      end
     end
   end
 end

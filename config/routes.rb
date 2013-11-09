@@ -12,6 +12,7 @@ Yemaomen::Application.routes.draw do
   # :destroy_all可以不加入resources的only:列表中，当然，加进去也没什么问题。
   match '/posts', to: 'posts#destroy_all', via: :delete
   match '/my_posts', to: 'posts#my_posts', via: :get
+  match '/posts_by_like_count', to: 'posts#posts_by_like_count', via: :get
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

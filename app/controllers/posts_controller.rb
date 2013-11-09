@@ -2,33 +2,23 @@
 
 class PostsController < ApplicationController
   
-  skip_before_filter :authorize, only: [:top_posts, :index]
+  skip_before_filter :authorize, only: [:top_posts, :index, :posts_by_like_count]
   
   # GET posts
   def index
     # before_timestamp, after_timestamp, page_size, topic_id, target_user_id都是定义在application_controller.rb中的方法。
     # 这些方法可以在这个controller的其他方法中，或其他controller中得到复用。
-    hash = { before_timestamp: before_timestamp, after_timestamp: after_timestamp, page_size: page_size }
-    
-    if !topic_id.nil? && target_user_id.nil?
-      # 话题空间的猫聊列表
-      @posts = Topic.find(topic_id).posts.limited_posts(hash)
-    elsif topic_id.nil? && target_user_id.nil?
-      # 闲扯板块的猫聊
-      @posts = Post.free_chat.limited_posts(hash)
-    elsif topic_id.nil? && !target_user_id.nil?
-      # 查看别人的猫聊历史
-      target_user = User.find(target_user_id)
-      # nil和false都是false
-      if target_user.allow_browse
-        @posts = target_user.posts.limited_posts(hash)
-      else
-        @posts = target_user.posts.order("updated_at DESC").limit(5)
-      end
-    else
-      # !topic_id.nil? && !target_user_id.nil? 理论上，如果客户端请求正确的话，不会出现这种情况。
-    end
-    render 'posts/index'
+    hash = { before_timestamp: before_timestamp, after_timestamp: after_timestamp, page_size: page_size, 
+      order_by_like_count: false }
+    # render_posts()是PostsController定义的一个private方法。
+    render_posts(hash)  
+  end
+  
+  # GET posts_by_like_count
+  def posts_by_like_count
+    hash = { before_timestamp: before_timestamp, after_timestamp: after_timestamp, page_size: page_size, 
+      order_by_like_count: true }
+    render_posts(hash)
   end
   
   # GET my_posts
@@ -107,5 +97,33 @@ class PostsController < ApplicationController
     end
     render json: '所有猫聊删除成功。'.to_json, status: 200
   end
+  
+  private
+  
+    def render_posts(hash)
+      if !topic_id.nil? && target_user_id.nil?
+        # 话题空间的猫聊列表
+        @posts = Topic.find(topic_id).posts.limited_posts(hash)
+      elsif topic_id.nil? && target_user_id.nil?
+        # 闲扯板块的猫聊
+        @posts = Post.free_chat.limited_posts(hash)
+      elsif topic_id.nil? && !target_user_id.nil?
+        # 查看别人的猫聊历史
+        target_user = User.find(target_user_id)
+        # nil和false都是false
+        if target_user.allow_browse
+          @posts = target_user.posts.limited_posts(hash)
+        else
+          if hash[:order_by_like_count]
+            @posts = target_user.posts.order("like_count DESC").limit(5)
+          else
+            @posts = target_user.posts.order("updated_at DESC").limit(5)
+          end
+        end
+      else
+        # !topic_id.nil? && !target_user_id.nil? 理论上，如果客户端请求正确的话，不会出现这种情况。
+      end
+      render 'posts/index'
+    end
   
 end
