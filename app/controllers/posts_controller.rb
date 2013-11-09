@@ -70,6 +70,13 @@ class PostsController < ApplicationController
     render 'posts/index'
   end
   
+  # GET my_posts_by_like_count
+  def my_posts_by_like_count
+    hash = { page: page, page_size: page_size }
+    @posts = @user.posts.limited_posts_by_like_count(hash)
+    render 'posts/index'
+  end
+  
   # GET top_posts
   def top_posts
     # 获取今天的Topic ActiveRecord::Relation集合
