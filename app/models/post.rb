@@ -81,7 +81,7 @@ class Post < ActiveRecord::Base
     
     page = hash[:page]
     # page = 2, offset = (2 - 1) * 20 = 20, 返回21 - 40的20条数据。
-    number_of_page = (page && (page.to_i >= 1)) ? page - 1 : 0
+    number_of_page = (page && (page.to_i >= 1)) ? page.to_i - 1 : 0
     page_size = hash[:page_size]
     number_of_posts_per_page = (page_size && page_size.to_i > 0) ? page_size : 20
     offset = number_of_page * number_of_posts_per_page
