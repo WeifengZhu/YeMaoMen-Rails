@@ -45,6 +45,8 @@ class Post < ActiveRecord::Base
   
   # 和scope作用类似，但参数更明了。
   def self.limited_posts(hash)
+    Rails.logger.debug { "#{hash.inspect}" }
+    
     before_timestamp = hash[:before_timestamp]
     before_timestamp_utc = Time.zone.parse(before_timestamp).utc if before_timestamp
     

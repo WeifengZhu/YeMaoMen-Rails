@@ -20,9 +20,8 @@ class User < ActiveRecord::Base
   
   attr_accessible :allow_browse, :avatar_url, :bio, :location, :password, :password_confirmation,
    :username, :last_active_time, :score
-  
-  # 按时间降序排列，即新创建的在前。 
-  has_many :posts, dependent: :destroy, order: "created_at DESC" 
+   
+  has_many :posts, dependent: :destroy
 
   # 写了这个就表明：表单提交的参数中要有password和password_confirmation，并且两者要一致。
   # 到时候user对象中存的是根据password和password_confirmation计算出来的password_digest。

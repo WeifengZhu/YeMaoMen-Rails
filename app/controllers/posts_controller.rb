@@ -103,12 +103,15 @@ class PostsController < ApplicationController
     def render_posts(hash)
       if !topic_id.nil? && target_user_id.nil?
         # 话题空间的猫聊列表
+        Rails.logger.debug { "话题空间" }
         @posts = Topic.find(topic_id).posts.limited_posts(hash)
       elsif topic_id.nil? && target_user_id.nil?
         # 闲扯板块的猫聊
+        Rails.logger.debug { "闲扯" }
         @posts = Post.free_chat.limited_posts(hash)
       elsif topic_id.nil? && !target_user_id.nil?
         # 查看别人的猫聊历史
+        Rails.logger.debug { "别的用户" }
         target_user = User.find(target_user_id)
         # nil和false都是false
         if target_user.allow_browse
