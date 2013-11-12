@@ -4,10 +4,10 @@ source 'https://rubygems.org'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'rails', '3.2.14'
-gem 'sqlite3'
+gem 'mysql2'
 gem 'rabl' # ruby API building language
 gem 'jquery-rails'
-gem 'bcrypt-ruby' # has_secure_password
+gem 'bcrypt-ruby', '3.0.1' # has_secure_password
 
 # Gems used only for assets and not required
 # in production environments by default.
