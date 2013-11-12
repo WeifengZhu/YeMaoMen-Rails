@@ -11,4 +11,21 @@ class TopicsController < ApplicationController
     render 'topics/index'  
   end
   
+  # POST topics
+  def create
+    @topic = Topic.new(params[:topic])
+    if @topic.save
+      render 'topics/show'
+    else
+      render json: @topic.errors.full_messages.to_json, status: 400
+    end
+  end
+  
+  # DELETE topics/:id
+  def destroy
+    Topic.find(params[:id]).destroy
+    # @topic不可能删除不了，所以直接进行删除，不进行判断了。
+    render json: '话题删除成功。'.to_json, status: 200
+  end
+  
 end
