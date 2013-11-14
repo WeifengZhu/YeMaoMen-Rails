@@ -21,7 +21,6 @@ class Post < ActiveRecord::Base
   belongs_to :topic
   belongs_to :user
   
-
   
   # self join
   # 这么设置好之后，可以通过@post.reply_to_post来获取这个post所回复的post，通过@post.re_posts来获取回复这个Post的posts。
