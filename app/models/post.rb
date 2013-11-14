@@ -21,6 +21,7 @@ class Post < ActiveRecord::Base
   belongs_to :topic
   belongs_to :user
   
+  
   # self join
   # 这么设置好之后，可以通过@post.reply_to_post来获取这个post所回复的post，通过@post.re_posts来获取回复这个Post的posts。
   # 如果有，则返回这个post对象，如果没有，则返回nil。可以用以下表达式来判断关联对象是否存在：@post.reply_to_post.nil?,
