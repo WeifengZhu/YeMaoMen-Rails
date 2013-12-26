@@ -69,9 +69,10 @@ class Post < ActiveRecord::Base
       Rails.logger.debug { "2" }
       order("updated_at DESC").where("updated_at > ?", after_timestamp_utc).limit(number_of_posts_per_page)
     else
-      Rails.logger.debug { "3" }
-      # 如果API调用错误，同时传了before_timestamp和after_timestamp的话，会进入这个分支。
+      # 两种情况会进入到这个分支：有before_timestamp_utc，没有after_timestamp_utc。加载更多。
+      # 或两者都有。如果API调用错误，同时传了before_timestamp和after_timestamp的话，也会进入这个分支。
       # 所以，请注意API的使用。
+      Rails.logger.debug { "3" }
       order("updated_at DESC").where("updated_at < ?", before_timestamp_utc).limit(number_of_posts_per_page)
     end
   end
