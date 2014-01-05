@@ -1,4 +1,4 @@
 object @user
 
 extends "users/user"
-node(:success_message) { "登录成功。" }
+node(:successMessage) { "登录成功。" }
